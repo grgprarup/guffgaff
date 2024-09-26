@@ -3,9 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/screens/home_screen.dart';
 import 'package:guffgaff/src/screens/register_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
-
-import '../constants.dart';
-import '../widgets/custom_form_field.dart';
+import 'package:guffgaff/src/constants.dart';
+import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

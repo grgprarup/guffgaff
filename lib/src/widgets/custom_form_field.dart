@@ -25,7 +25,7 @@ class CustomFormField extends StatelessWidget {
         onSaved: onSaved,
         obscureText: obscureText,
         validator: (value) {
-          if (value!=null && validationRegEx.hasMatch(value)) {
+          if (value != null && validationRegEx.hasMatch(value)) {
             return null;
           }
           return 'Enter a valid ${labelText.toLowerCase()}';

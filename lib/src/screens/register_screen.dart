@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:guffgaff/src/constants.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
-
-import '../constants.dart';
-import '../widgets/custom_form_field.dart';
+import 'package:guffgaff/src/services/media_service.dart';
+import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,13 +19,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GetIt _getIt = GetIt.instance;
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
   late AuthenticationService _authenticationService;
+  late MediaService _mediaService;
 
   String? fullName, email, password, confirmPassword;
+  File? selectedImage;
 
   @override
   void initState() {
     super.initState();
     _authenticationService = _getIt<AuthenticationService>();
+    _mediaService = _getIt<MediaService>();
   }
 
   @override
@@ -146,11 +151,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _profPicSelectionField() {
     return GestureDetector(
-      onTap: () {
-        // TODO: Select profile picture
+      onTap: () async {
+        File? file = await _mediaService.getImageFromGallery();
+        if (file != null) {
+          setState(() {
+            selectedImage = file;
+          });
+        }
       },
       child: CircleAvatar(
         radius: MediaQuery.of(context).size.width * 0.15,
+        backgroundImage: selectedImage != null
+            ? FileImage(selectedImage!)
+            : AssetImage(PROF_PIC_PLACEHOLDER) as ImageProvider,
       ),
     );
   }

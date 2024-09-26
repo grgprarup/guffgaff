@@ -5,3 +5,6 @@ final RegExp EMAIL_VALIDATION_REGEX =
 
 final RegExp PASSWORD_VALIDATION_REGEX =
     RegExp(r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+
+final String PROF_PIC_PLACEHOLDER =
+    "lib/src/assets/images/profile_pic_placeholder.jpg";
