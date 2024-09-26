@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guffgaff/src/screens/register_screen.dart';
 
+import '../widgets/custom_form_field.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -80,42 +82,30 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  border: const OutlineInputBorder(),
-                ),
-                onSaved: (value) {
-                  // TODO: Save the email
-                },
-              ),
+              labelText: "Email",
+              onSaved: (value) {
+                // TODO: Save the email
+              },
             ),
-            SizedBox(
+            CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  border: const OutlineInputBorder(),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                    child: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                  ),
-                ),
-                obscureText: !_isPasswordVisible,
-                onSaved: (value) {
-                  // TODO: Save the password
+              labelText: "Password",
+              onSaved: (value) {
+                // TODO: Save the password
+              },
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
                 },
+                child: Icon(
+                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
               ),
+              obscureText: !_isPasswordVisible,
             ),
             _loginButton(),
           ],
@@ -184,8 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => RegisterScreen()),
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
                   );
                 },
                 child: Text(
