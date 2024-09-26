@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
 
-import '../../consts.dart';
+import '../constants.dart';
 import '../widgets/custom_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
