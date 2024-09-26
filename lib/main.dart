@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:guffgaff/src/screens/home_screen.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
+import 'package:guffgaff/src/services/authentication_service.dart';
+import 'package:guffgaff/utils.dart';
 
 void main() async {
+  await setup();
   runApp(MyApp());
 }
 
+Future<void> setup() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupFirebase();
+  await registerServices();
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GetIt _getIt = GetIt.instance;
+  late AuthenticationService _authenticationService;
+
+  MyApp({super.key}) {
+    _authenticationService = _getIt.get<AuthenticationService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +37,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
-      home: LoginScreen(),
+      home: _authenticationService.user != null ? HomeScreen() : LoginScreen(),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:guffgaff/src/screens/home_screen.dart';
 import 'package:guffgaff/src/screens/register_screen.dart';
+import 'package:guffgaff/src/services/authentication_service.dart';
 
 import '../constants.dart';
 import '../widgets/custom_form_field.dart';
@@ -12,8 +15,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GetIt _getIt = GetIt.instance;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  late AuthenticationService _authenticationService;
   bool _isPasswordVisible = false;
+  String? email, password;
+
+  @override
+  void initState() {
+    super.initState();
+    _authenticationService = _getIt<AuthenticationService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
               labelText: "Email",
               validationRegEx: EMAIL_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the email
+                setState(() {
+                  email = value;
+                });
               },
             ),
             CustomFormField(
@@ -96,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
               labelText: "Password",
               validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the password
+                setState(() {
+                  password = value;
+                });
               },
               suffixIcon: GestureDetector(
                 onTap: () {
@@ -121,8 +137,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
-        onPressed: () {
-          // TODO: Validate the form
+        onPressed: () async {
+          if (_loginFormKey.currentState?.validate() ?? false) {
+            _loginFormKey.currentState?.save();
+            bool loginSuccess =
+                await _authenticationService.login(email!, password!);
+
+            if (loginSuccess) {
+              HomeScreen();
+            }
+          }
         },
         color: Theme.of(context).colorScheme.primary,
         child: const Text(
