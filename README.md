@@ -1,6 +1,10 @@
 # GuffGaff
 
-GuffGaff is a cross-platform chat application built with Flutter, designed for seamless real-time communication on both Android and iOS. It enables users to send instant messages, share multimedia, and participate in group chats, all while enjoying a clean, intuitive interface. With features like push notifications, customizable profiles, and secure end-to-end encryption, GuffGaff ensures both convenience and privary. Whether for personal conversations or group discussions, the app keeps communication fast, reliable, and engagin. Stay connected anytime, anywhere with GuffGaff.
+GuffGaff is a cross-platform chat application built with Flutter, designed for seamless real-time communication on both
+Android and iOS. It enables users to send instant messages, share multimedia, and participate in group chats, all while
+enjoying a clean, intuitive interface. With features like push notifications, customizable profiles, and secure
+end-to-end encryption, GuffGaff ensures both convenience and privary. Whether for personal conversations or group
+discussions, the app keeps communication fast, reliable, and engagin. Stay connected anytime, anywhere with GuffGaff.
 
 ## Features
 
@@ -48,13 +52,31 @@ Before starting development on GuffGaff, ensure that your development environmen
     flutter run
     ```
 
+### Setup Firebase
+
+1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/).
+2. Install [Firebase-cli](https://firebase.google.com/docs/cli#install-cli-mac-linux)
+3. Login to Firebase-cli
+   ```bash
+   firebase login
+   ```
+4. Activate flutterfire cli
+   ```bash
+   flutter pub global activate flutterfire_cli
+   ```
+5. Configure Firebase for Android and iOS
+   ```bash
+   flutterfire configure
+   ```
+
 ## License
 
 This project is licensed under the GNU General Public License. See the [LICENSE](/LICENSE) file for details.
 
 ## Support the Project
 
-If you enjoy using GufGaff and would like to support the project, consider buying me a coffee! Your support helps keep this project active and maintained.
+If you enjoy using GufGaff and would like to support the project, consider buying me a coffee! Your support helps keep
+this project active and maintained.
 
 <a href="https://www.buymeacoffee.com/grgprarup" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="45" width="180"></a>
 
