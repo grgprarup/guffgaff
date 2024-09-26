@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
+import 'package:guffgaff/src/services/authentication_service.dart';
 
 import '../constants.dart';
 import '../widgets/custom_form_field.dart';
@@ -12,7 +14,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final GetIt _getIt = GetIt.instance;
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
+  late AuthenticationService _authenticationService;
+
+  String? fullName, email, password, confirmPassword;
+
+  @override
+  void initState() {
+    super.initState();
+    _authenticationService = _getIt<AuthenticationService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: "Full Name",
               validationRegEx: NAME_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the Full Name
+                setState(() {
+                  fullName = value;
+                });
               },
             ),
             CustomFormField(
@@ -95,7 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: "Email",
               validationRegEx: EMAIL_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the email
+                setState(() {
+                  email = value;
+                });
               },
             ),
             CustomFormField(
@@ -103,7 +119,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: "Password",
               validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the password
+                setState(() {
+                  password = value;
+                });
               },
               obscureText: true,
             ),
@@ -112,7 +130,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: "Confirm Password",
               validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
-                // TODO: Save the confirm password
+                setState(() {
+                  confirmPassword = value;
+                });
+                // TODO: Validate the password and confirmPassword
               },
               obscureText: true,
             ),
@@ -138,8 +159,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
-        onPressed: () {
-          // TODO: Validate the form
+        onPressed: () async {
+          try {
+            if (_signUpFormKey.currentState?.validate() ?? false) {
+              _signUpFormKey.currentState?.save();
+              bool signUpSuccess =
+                  await _authenticationService.signUp(email!, password!);
+              if (signUpSuccess) {
+                // TODO: Implement user sign up logic
+              } else {
+                throw Exception('Unable to register user');
+              }
+            }
+          } catch (e) {
+            print(e);
+          }
         },
         color: Theme.of(context).colorScheme.primary,
         child: const Text(
