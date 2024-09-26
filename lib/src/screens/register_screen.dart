@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:guffgaff/src/screens/register_screen.dart';
+import 'package:guffgaff/src/screens/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
-  bool _isPasswordVisible = false;
+class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Login",
+                      "Create an Account",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
-                      "Please sign in to continue.",
+                      "It's quick and easy",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -50,52 +49,73 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.sizeOf(context).height * 0.40,
+                height: MediaQuery.sizeOf(context).height * 0.70,
                 margin: EdgeInsets.symmetric(
                   vertical: MediaQuery.sizeOf(context).height * 0.05,
                 ),
                 child: Form(
-                  key: _loginFormKey,
+                  key: _registerFormKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.1,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: "Email",
-                            border: const OutlineInputBorder(),
-                          ),
-                          onSaved: (value) {
-                            // TODO: Save the email
-                          },
+                      GestureDetector(
+                        onTap: () {
+                          // TODO: Select image
+                        },
+                        child: CircleAvatar(
+                          radius: MediaQuery.of(context).size.width * 0.15,
                         ),
                       ),
                       SizedBox(
                         height: MediaQuery.sizeOf(context).height * 0.1,
                         child: TextFormField(
+                          onSaved: (value) {
+                            // TODO: Save the name
+                          },
                           decoration: InputDecoration(
-                            labelText: "Password",
+                            labelText: "Full Name",
                             border: const OutlineInputBorder(),
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
-                              },
-                              child: Icon(
-                                _isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                            ),
                           ),
-                          obscureText: !_isPasswordVisible,
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.1,
+                        child: TextFormField(
+                          onSaved: (value) {
+                            // TODO: Save the email
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.1,
+                        child: TextFormField(
                           onSaved: (value) {
                             // TODO: Save the password
                           },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            border: const OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.1,
+                        child: TextFormField(
+                          onSaved: (value) {
+                            // TODO: Save the confirm password
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Confirm Password",
+                            border: const OutlineInputBorder(),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -106,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           color: Theme.of(context).colorScheme.primary,
                           child: const Text(
-                            "LOGIN",
+                            "SIGN UP",
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -118,45 +138,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Expanded(
-                child: Column(
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text("Already have an account? "),
                     GestureDetector(
                       onTap: () {
-                        // TODO: Implement forgot password
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
                       },
                       child: Text(
-                        "Forgot Password?",
+                        "Login",
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w800,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text("Don't have an account? "),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => RegisterScreen()),
-                            );
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
