@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guffgaff/src/screens/register_screen.dart';
 
+import '../../consts.dart';
 import '../widgets/custom_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -85,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Email",
+              validationRegEx: EMAIL_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the email
               },
@@ -92,6 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Password",
+              validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the password
               },

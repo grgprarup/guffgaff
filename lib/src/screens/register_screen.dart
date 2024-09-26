@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
 
+import '../../consts.dart';
 import '../widgets/custom_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         vertical: MediaQuery.sizeOf(context).height * 0.05,
       ),
       child: Form(
-        key: _registerFormKey,
+        key: _signUpFormKey,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -84,6 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Full Name",
+              validationRegEx: NAME_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the Full Name
               },
@@ -91,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Email",
+              validationRegEx: EMAIL_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the email
               },
@@ -98,6 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Password",
+              validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the password
               },
@@ -106,6 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomFormField(
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Confirm Password",
+              validationRegEx: PASSWORD_VALIDATION_REGEX,
               onSaved: (value) {
                 // TODO: Save the confirm password
               },
