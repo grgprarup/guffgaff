@@ -5,6 +5,7 @@ import 'package:guffgaff/src/services/database_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/services/toast_alert_service.dart';
+import 'package:guffgaff/src/widgets/chat_tile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -83,10 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               UserProfile user = users[index].data();
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                ),
-              );
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
+                  child: ChatTile(
+                    userProfile: user,
+                    onTap: () {
+
+                    },
+                  ));
             },
           );
         }
