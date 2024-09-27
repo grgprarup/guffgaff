@@ -9,6 +9,7 @@ import 'package:guffgaff/src/services/database_service.dart';
 import 'package:guffgaff/src/services/media_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/storage_service.dart';
+import 'package:guffgaff/src/services/toast_alert_service.dart';
 import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -27,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late NavigationService _navigationService;
   late StorageService _storageService;
   late DatabaseService _databaseService;
+  late ToastAlertService _toastAlertService;
 
   String? fullName, email, password, confirmPassword;
   File? selectedImage;
@@ -39,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _navigationService = _getIt<NavigationService>();
     _storageService = _getIt<StorageService>();
     _databaseService = _getIt<DatabaseService>();
+    _toastAlertService = _getIt<ToastAlertService>();
   }
 
   @override
@@ -201,6 +204,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       profPicURL: profPicURL,
                     ),
                   );
+                  _toastAlertService.showToast(
+                    text: 'User registered successfully',
+                    icon: Icons.check,
+                  );
                   _navigationService.goBack();
                   _navigationService.pushReplacementNamed('/home');
                 } else {
@@ -211,7 +218,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               }
             }
           } catch (e) {
-            print(e);
+            _toastAlertService.showToast(
+              text: 'Failed to register, Please try again!',
+              icon: Icons.error,
+            );
           }
         },
         color: Theme.of(context).colorScheme.primary,
