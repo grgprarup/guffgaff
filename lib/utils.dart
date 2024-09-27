@@ -6,6 +6,7 @@ import 'package:guffgaff/src/services/media_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/storage_service.dart';
 import 'package:guffgaff/src/services/database_service.dart';
+import 'package:guffgaff/src/services/toast_alert_service.dart';
 
 Future<void> setupFirebase() async {
   await Firebase.initializeApp(
@@ -29,5 +30,8 @@ Future<void> registerServices() async {
   );
   getIt.registerSingleton<DatabaseService>(
     DatabaseService(),
+  );
+  getIt.registerSingleton<ToastAlertService>(
+    ToastAlertService(),
   );
 }
