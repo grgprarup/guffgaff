@@ -5,6 +5,7 @@ import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/services/media_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/storage_service.dart';
+import 'package:guffgaff/src/services/database_service.dart';
 
 Future<void> setupFirebase() async {
   await Firebase.initializeApp(
@@ -25,5 +26,8 @@ Future<void> registerServices() async {
   );
   getIt.registerSingleton<StorageService>(
     StorageService(),
+  );
+  getIt.registerSingleton<DatabaseService>(
+    DatabaseService(),
   );
 }

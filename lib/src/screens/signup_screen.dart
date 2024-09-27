@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/constants.dart';
-import 'package:guffgaff/src/screens/login_screen.dart';
+import 'package:guffgaff/src/models/user_profile.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
+import 'package:guffgaff/src/services/database_service.dart';
 import 'package:guffgaff/src/services/media_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/storage_service.dart';
@@ -25,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late MediaService _mediaService;
   late NavigationService _navigationService;
   late StorageService _storageService;
+  late DatabaseService _databaseService;
 
   String? fullName, email, password, confirmPassword;
   File? selectedImage;
@@ -36,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _mediaService = _getIt<MediaService>();
     _navigationService = _getIt<NavigationService>();
     _storageService = _getIt<StorageService>();
+    _databaseService = _getIt<DatabaseService>();
   }
 
   @override
@@ -190,8 +193,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   file: selectedImage!,
                   uid: _authenticationService.user!.uid,
                 );
-                if (profPicURL != null ) {
-                  // TODO: Create user profile in Firestore
+                if (profPicURL != null) {
+                  await _databaseService.createUserProfile(
+                    userProfile: UserProfile(
+                      userId: _authenticationService.user!.uid,
+                      fullName: fullName!,
+                      profPicURL: profPicURL,
+                    ),
+                  );
                   _navigationService.goBack();
                   _navigationService.pushReplacementNamed('/home');
                 } else {
