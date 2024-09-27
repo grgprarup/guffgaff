@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:guffgaff/src/screens/home_screen.dart';
-import 'package:guffgaff/src/screens/signup_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/constants.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
+import 'package:guffgaff/src/services/toast_alert_service.dart';
 import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late AuthenticationService _authenticationService;
   late NavigationService _navigationService;
+  late ToastAlertService _toastAlertService;
 
   bool _isPasswordVisible = false;
   String? email, password;
@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _authenticationService = _getIt<AuthenticationService>();
     _navigationService = _getIt<NavigationService>();
+    _toastAlertService = _getIt<ToastAlertService>();
   }
 
   @override
@@ -149,6 +150,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
             if (loginSuccess) {
               _navigationService.pushReplacementNamed('/home');
+            } else {
+              _toastAlertService.showToast(
+                text: 'Email or password is incorrect.',
+                icon: Icons.error,
+              );
             }
           }
         },
