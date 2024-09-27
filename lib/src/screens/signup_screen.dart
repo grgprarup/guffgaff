@@ -32,6 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String? fullName, email, password, confirmPassword;
   File? selectedImage;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -62,8 +63,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: [
             _headerText(),
-            _signUpForm(),
-            _loginLink(),
+            if (!isLoading) _signUpForm(),
+            if (!isLoading) _loginLink(),
+            if (isLoading)
+              const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
           ],
         ),
       ),
@@ -186,6 +193,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
         onPressed: () async {
+          setState(() {
+            isLoading = true;
+          });
           try {
             if (_signUpFormKey.currentState?.validate() ?? false) {
               _signUpFormKey.currentState?.save();
@@ -223,6 +233,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               icon: Icons.error,
             );
           }
+          setState(() {
+            isLoading = false;
+          });
         },
         color: Theme.of(context).colorScheme.primary,
         child: const Text(
