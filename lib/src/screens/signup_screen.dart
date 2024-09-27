@@ -7,6 +7,7 @@ import 'package:guffgaff/src/screens/login_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/services/media_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
+import 'package:guffgaff/src/services/storage_service.dart';
 import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late AuthenticationService _authenticationService;
   late MediaService _mediaService;
   late NavigationService _navigationService;
+  late StorageService _storageService;
 
   String? fullName, email, password, confirmPassword;
   File? selectedImage;
@@ -33,6 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _authenticationService = _getIt<AuthenticationService>();
     _mediaService = _getIt<MediaService>();
     _navigationService = _getIt<NavigationService>();
+    _storageService = _getIt<StorageService>();
   }
 
   @override
@@ -183,10 +186,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               bool signUpSuccess =
                   await _authenticationService.signUp(email!, password!);
               if (signUpSuccess) {
-                _navigationService.goBack();
-                _navigationService.pushReplacementNamed('/home');
+                String? profPicURL = await _storageService.uploadUserProfPic(
+                  file: selectedImage!,
+                  uid: _authenticationService.user!.uid,
+                );
+                if (profPicURL != null ) {
+                  // TODO: Create user profile in Firestore
+                  _navigationService.goBack();
+                  _navigationService.pushReplacementNamed('/home');
+                } else {
+                  throw Exception('Uploading user profile picture failed.');
+                }
               } else {
-                throw Exception('Unable to register user');
+                throw Exception('User registration failed.');
               }
             }
           } catch (e) {
