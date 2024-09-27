@@ -6,20 +6,23 @@ import 'package:guffgaff/src/constants.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/services/media_service.dart';
+import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final GetIt _getIt = GetIt.instance;
   final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
+
   late AuthenticationService _authenticationService;
   late MediaService _mediaService;
+  late NavigationService _navigationService;
 
   String? fullName, email, password, confirmPassword;
   File? selectedImage;
@@ -29,6 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     _authenticationService = _getIt<AuthenticationService>();
     _mediaService = _getIt<MediaService>();
+    _navigationService = _getIt<NavigationService>();
   }
 
   @override
@@ -179,7 +183,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               bool signUpSuccess =
                   await _authenticationService.signUp(email!, password!);
               if (signUpSuccess) {
-                // TODO: Implement user sign up logic
+                _navigationService.goBack();
+                _navigationService.pushReplacementNamed('/home');
               } else {
                 throw Exception('Unable to register user');
               }
@@ -209,10 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           const Text("Already have an account? "),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
-              );
+              _navigationService.goBack();
             },
             child: Text(
               "Login",

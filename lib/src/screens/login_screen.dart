@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/screens/home_screen.dart';
-import 'package:guffgaff/src/screens/register_screen.dart';
+import 'package:guffgaff/src/screens/signup_screen.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/src/constants.dart';
+import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/widgets/custom_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,7 +17,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GetIt _getIt = GetIt.instance;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+
   late AuthenticationService _authenticationService;
+  late NavigationService _navigationService;
+
   bool _isPasswordVisible = false;
   String? email, password;
 
@@ -24,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _authenticationService = _getIt<AuthenticationService>();
+    _navigationService = _getIt<NavigationService>();
   }
 
   @override
@@ -143,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 await _authenticationService.login(email!, password!);
 
             if (loginSuccess) {
-              HomeScreen();
+              _navigationService.pushReplacementNamed('/home');
             }
           }
         },
@@ -198,10 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text("Don't have an account? "),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterScreen()),
-                  );
+                  _navigationService.pushNamed('/signup');
                 },
                 child: Text(
                   "Sign Up",
