@@ -84,15 +84,34 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               UserProfile user = users[index].data();
               return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                  ),
-                  child: ChatTile(
-                    userProfile: user,
-                    onTap: () {
-
-                    },
-                  ));
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                ),
+                child: ChatTile(
+                  userProfile: user,
+                  onTap: () async {
+                    final chatExists = await _databaseService.checkChatExists(
+                      _authenticationService.user!.uid,
+                      user.userId!,
+                    );
+                    if (!chatExists) {
+                      await _databaseService.createNewChat(
+                        _authenticationService.user!.uid,
+                        user.userId!,
+                      );
+                    }
+                    _navigationService.push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ChatPage(
+                            chatUser: user,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
             },
           );
         }

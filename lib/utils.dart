@@ -35,3 +35,10 @@ Future<void> registerServices() async {
     ToastAlertService(),
   );
 }
+
+String generateChatID({required String userId1, required String userId2}) {
+  List userIds = [userId1, userId2];
+  userIds.sort();
+  String chatID = userIds.fold("", (id, userId) => "$id$userId");
+  return chatID;
+}
