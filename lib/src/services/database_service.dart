@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/models/chat.dart';
+import 'package:guffgaff/src/models/message.dart';
 import 'package:guffgaff/src/models/user_profile.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
 import 'package:guffgaff/utils.dart';
@@ -62,5 +63,25 @@ class DatabaseService {
       messages: [],
     );
     await docRef.set(chat);
+  }
+
+  Future<void> sendChatMessage(
+      String userId1, String userId2, Message message) async {
+    String chatID = generateChatID(userId1: userId1, userId2: userId2);
+    final docRef = _chatsCollection!.doc(chatID);
+    await docRef.update(
+      {
+        "messages": FieldValue.arrayUnion(
+          [
+            message.toJson(),
+          ],
+        ),
+      },
+    );
+  }
+
+  Stream<DocumentSnapshot<Chat>> getChatData(String userId1, String userId2) {
+  String chatID = generateChatID(userId1: userId1, userId2: userId2);
+  return _chatsCollection?.doc(chatID).snapshots() as Stream<DocumentSnapshot<Chat>>;
   }
 }

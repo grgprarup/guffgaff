@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:guffgaff/src/models/user_profile.dart';
+import 'package:guffgaff/src/screens/chat_screen.dart';
 import 'package:guffgaff/src/services/database_service.dart';
 import 'package:guffgaff/src/services/navigation_service.dart';
 import 'package:guffgaff/src/services/authentication_service.dart';
@@ -103,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _navigationService.push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return ChatPage(
+                          return ChatScreen(
                             chatUser: user,
                           );
                         },
