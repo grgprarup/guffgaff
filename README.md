@@ -1,16 +1,63 @@
-# guffgaff
+# GuffGaff
 
-A simple real time chat application.
+GuffGaff is a cross-platform chat application built with Flutter, designed for seamless real-time communication on both Android and iOS. It enables users to send instant messages, share multimedia, and participate in group chats, all while enjoying a clean, intuitive interface. With features like push notifications, customizable profiles, and secure end-to-end encryption, GuffGaff ensures both convenience and privary. Whether for personal conversations or group discussions, the app keeps communication fast, reliable, and engagin. Stay connected anytime, anywhere with GuffGaff.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Cross-Platform Support:** Available on both Android and iOS for a consistent user experience.
+- **Real-Time Messaging:** Instant messaging with real-time updates for seamless conversations.
+- **Multimedia Sharing:** Send and receive images, videos, and files easily within chats.
+- **Push Notifications:** Receive notifications for new messages, even when the app is closed.
+- **Customizable Profiles:** Personalize your profile with a picture, bio, and status.
+- **End-to-End Encryption:** Ensure privacy and security with encrypted conversations.
 
-A few resources to get you started if this is your first Flutter project:
+## Development
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Prerequisites
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Before starting development on GuffGaff, ensure that your development environment meets the following requirements:
+
+1. **Flutter Version:** 3.24.0 or higher
+2. **Dart Version:** 3.5.0 or higher
+3. **Minimum Android Sdk:** 23
+4. **Minimum Java Version:** 17
+
+### Installation
+
+1. Clone the Repository
+
+    ```bash
+    git clone https://github.com/grgprarup/guffgaff.git
+    ```
+
+2. Navigate to the Project Directory:
+
+    ```bash
+    cd guffgaff
+    ```
+
+3. Install Flutter Dependencies:
+
+    ```bash
+    flutter pub get
+    ```
+
+4. Run the Application:
+
+    ```bash
+    flutter run
+    ```
+
+## License
+
+This project is licensed under the GNU General Public License. See the [LICENSE](/LICENSE) file for details.
+
+## Support the Project
+
+If you enjoy using GufGaff and would like to support the project, consider buying me a coffee! Your support helps keep this project active and maintained.
+
+<a href="https://www.buymeacoffee.com/grgprarup" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="45" width="180"></a>
+
+## Contact
+
+For any questions or support related to development, reach out to <developer001.sd@gmail.com> or <grgprarup@gmail.com>.
