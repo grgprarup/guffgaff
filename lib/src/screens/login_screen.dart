@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,74 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Container(
+                height: MediaQuery.sizeOf(context).height * 0.40,
+                margin: EdgeInsets.symmetric(
+                  vertical: MediaQuery.sizeOf(context).height * 0.05,
+                ),
+                child: Form(
+                  key: _loginFormKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.1,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            border: const OutlineInputBorder(),
+                          ),
+                          onSaved: (value) {
+                            // TODO: Save the email
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.1,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            border: const OutlineInputBorder(),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                              child: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                          ),
+                          obscureText: !_isPasswordVisible,
+                          onSaved: (value) {
+                            // TODO: Save the password
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width,
+                        child: MaterialButton(
+                          onPressed: () {
+                            // TODO: Validate the form
+                          },
+                          color: Theme.of(context).colorScheme.primary,
+                          child: const Text(
+                            "LOGIN",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
