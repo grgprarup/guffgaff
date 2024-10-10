@@ -242,7 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   icon: Icons.check,
                 );
                 _navigationService.goBack();
-                _navigationService.pushReplacementNamed('/home');
+                _navigationService.pushReplacementNamed('/login');
               } else {
                 throw Exception('User registration failed.');
               }
