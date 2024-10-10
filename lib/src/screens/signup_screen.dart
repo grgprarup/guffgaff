@@ -218,28 +218,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _signUpFormKey.currentState?.save();
               bool signUpSuccess =
                   await _authenticationService.signUp(_email!, _password!);
+
               if (signUpSuccess) {
-                String? profPicURL = await _storageService.uploadUserProfPic(
-                  file: _selectedImage!,
-                  uid: _authenticationService.user!.uid,
-                );
-                if (profPicURL != null) {
-                  await _databaseService.createUserProfile(
-                    userProfile: UserProfile(
-                      userId: _authenticationService.user!.uid,
-                      fullName: _fullName!,
-                      profPicURL: profPicURL,
-                    ),
+                String? profPicURL;
+
+                if (_selectedImage != null) {
+                  profPicURL = await _storageService.uploadUserProfPic(
+                    file: _selectedImage!,
+                    uid: _authenticationService.user!.uid,
                   );
-                  _toastAlertService.showToast(
-                    text: 'User registered successfully',
-                    icon: Icons.check,
-                  );
-                  _navigationService.goBack();
-                  _navigationService.pushReplacementNamed('/home');
-                } else {
-                  throw Exception('Uploading user profile picture failed.');
                 }
+
+                await _databaseService.createUserProfile(
+                  userProfile: UserProfile(
+                    userId: _authenticationService.user!.uid,
+                    fullName: _fullName!,
+                    profPicURL: profPicURL,
+                  ),
+                );
+
+                _toastAlertService.showToast(
+                  text: 'User registered successfully',
+                  icon: Icons.check,
+                );
+                _navigationService.goBack();
+                _navigationService.pushReplacementNamed('/home');
               } else {
                 throw Exception('User registration failed.');
               }
