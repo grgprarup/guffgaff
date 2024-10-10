@@ -52,6 +52,16 @@ class AuthenticationService {
     return false;
   }
 
+  Future<bool> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
   void authStateChangesStreamListener(User? user) {
     if (user != null) {
       _user = user;
