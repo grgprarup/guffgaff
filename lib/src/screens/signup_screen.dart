@@ -30,9 +30,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late DatabaseService _databaseService;
   late ToastAlertService _toastAlertService;
 
-  String? fullName, email, password, confirmPassword;
-  File? selectedImage;
-  bool isLoading = false;
+  String? _fullName, _email, _password, _confirmPassword;
+  File? _selectedImage;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -63,9 +63,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: [
             _headerText(),
-            if (!isLoading) _signUpForm(),
-            if (!isLoading) _loginLink(),
-            if (isLoading)
+            if (!_isLoading) _signUpForm(),
+            if (!_isLoading) _loginLink(),
+            if (_isLoading)
               const Expanded(
                 child: Center(
                   child: CircularProgressIndicator(),
@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               validationRegEx: NAME_VALIDATION_REGEX,
               onSaved: (value) {
                 setState(() {
-                  fullName = value;
+                  _fullName = value;
                 });
               },
             ),
@@ -135,7 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               validationRegEx: EMAIL_VALIDATION_REGEX,
               onSaved: (value) {
                 setState(() {
-                  email = value;
+                  _email = value;
                 });
               },
             ),
@@ -143,9 +143,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Password",
               validationRegEx: PASSWORD_VALIDATION_REGEX,
+              onChanged: (value) {
+                setState(() {
+                  _password = value;
+                });
+              },
               onSaved: (value) {
                 setState(() {
-                  password = value;
+                  _password = value;
                 });
               },
               obscureText: true,
@@ -154,13 +159,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: MediaQuery.sizeOf(context).height * 0.1,
               labelText: "Confirm Password",
               validationRegEx: PASSWORD_VALIDATION_REGEX,
+              onChanged: (value) {
+                setState(() {
+                  _confirmPassword = value;
+                });
+              },
               onSaved: (value) {
                 setState(() {
-                  confirmPassword = value;
+                  _confirmPassword = value;
                 });
-                // TODO: Validate the password and confirmPassword
               },
               obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Confirm Password is required.';
+                } else if (value != _password) {
+                  return 'Passwords do not match.';
+                }
+                return null;
+              },
             ),
             _signUpButton(),
           ],
@@ -175,14 +192,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         File? file = await _mediaService.getImageFromGallery();
         if (file != null) {
           setState(() {
-            selectedImage = file;
+            _selectedImage = file;
           });
         }
       },
       child: CircleAvatar(
         radius: MediaQuery.of(context).size.width * 0.15,
-        backgroundImage: selectedImage != null
-            ? FileImage(selectedImage!)
+        backgroundImage: _selectedImage != null
+            ? FileImage(_selectedImage!)
             : AssetImage(PROF_PIC_PLACEHOLDER) as ImageProvider,
       ),
     );
@@ -194,23 +211,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: MaterialButton(
         onPressed: () async {
           setState(() {
-            isLoading = true;
+            _isLoading = true;
           });
           try {
             if (_signUpFormKey.currentState?.validate() ?? false) {
               _signUpFormKey.currentState?.save();
               bool signUpSuccess =
-                  await _authenticationService.signUp(email!, password!);
+                  await _authenticationService.signUp(_email!, _password!);
               if (signUpSuccess) {
                 String? profPicURL = await _storageService.uploadUserProfPic(
-                  file: selectedImage!,
+                  file: _selectedImage!,
                   uid: _authenticationService.user!.uid,
                 );
                 if (profPicURL != null) {
                   await _databaseService.createUserProfile(
                     userProfile: UserProfile(
                       userId: _authenticationService.user!.uid,
-                      fullName: fullName!,
+                      fullName: _fullName!,
                       profPicURL: profPicURL,
                     ),
                   );
@@ -234,7 +251,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             );
           }
           setState(() {
-            isLoading = false;
+            _isLoading = false;
           });
         },
         color: Theme.of(context).colorScheme.primary,

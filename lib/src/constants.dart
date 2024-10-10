@@ -1,10 +1,11 @@
-final RegExp NAME_VALIDATION_REGEX = RegExp(r"\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+");
+final RegExp NAME_VALIDATION_REGEX =
+    RegExp(r"^(?! )[A-ZÀ-ÿ][-,a-zA-ZÀ-ÿ. ']*(?! )$");
 
 final RegExp EMAIL_VALIDATION_REGEX =
-    RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+    RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
 final RegExp PASSWORD_VALIDATION_REGEX =
-    RegExp(r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+    RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$");
 
 final String PROF_PIC_PLACEHOLDER =
     "lib/src/assets/images/profile_pic_placeholder.jpg";
