@@ -72,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
         }
         return DashChat(
           messageOptions: const MessageOptions(
-            showCurrentUserAvatar: true,
+            showCurrentUserAvatar: false,
             showTime: true,
           ),
           inputOptions: InputOptions(
