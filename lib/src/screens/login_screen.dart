@@ -179,8 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              _showForgotPasswordDialog();
-              // TODO: Implement forgot password
+              _navigationService.pushNamed('/forgotpassword');
             },
             child: Text(
               "Forgot Password?",
@@ -224,101 +223,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  void _showForgotPasswordDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Reset Password"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                "Enter your email address to reset your password.",
-              ),
-              CustomFormField(
-                height: MediaQuery.sizeOf(context).height * 0.1,
-                labelText: "Email",
-                validationRegEx: EMAIL_VALIDATION_REGEX,
-                onSaved: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        _navigationService.goBack();
-                      },
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        if (email!.isNotEmpty) {
-                          try {
-                            bool success = await _authenticationService
-                                .sendPasswordResetEmail(email!);
-                            if (success) {
-                              _navigationService.goBack();
-                              _toastAlertService.showToast(
-                                text:
-                                    'Password reset email sent! Check you inbox.',
-                                icon: Icons.check,
-                              );
-                            } else {
-                              throw Exception(
-                                  'Failed to end email. Please try again.');
-                            }
-                          } catch (e) {
-                            _toastAlertService.showToast(
-                              text: e.toString(),
-                              icon: Icons.error,
-                            );
-                          }
-                        } else {
-                          _toastAlertService.showToast(
-                            text: 'Please enter a valid email address.',
-                            icon: Icons.warning,
-                          );
-                        }
-                      },
-                      child: Text(
-                        "Send Reset Link",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        );
-      },
     );
   }
 }

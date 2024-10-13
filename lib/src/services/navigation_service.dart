@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guffgaff/src/screens/login_screen.dart';
 import 'package:guffgaff/src/screens/signup_screen.dart';
 import 'package:guffgaff/src/screens/home_screen.dart';
+import 'package:guffgaff/src/screens/forgot_password_screen.dart';
 
 class NavigationService {
   late GlobalKey<NavigatorState> _navigatorKey;
@@ -9,6 +10,7 @@ class NavigationService {
     '/login': (context) => const LoginScreen(),
     '/signup': (context) => const SignUpScreen(),
     '/home': (context) => const HomeScreen(),
+    '/forgotpassword': (context) => const ForgotPasswordScreen(),
   };
 
   GlobalKey<NavigatorState>? get navigatorKey {
