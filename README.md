@@ -1,9 +1,6 @@
 # GuffGaff
 
-GuffGaff is a cross-platform chat application built with Flutter, designed for seamless real-time communication on both
-Android and iOS. It enables users to send instant messages, share multimedia, and participate in group chats, all whileenjoying a clean, intuitive interface. With features like push notifications, customizable profiles, and secure
-end-to-end encryption, GuffGaff ensures both convenience and privary. Whether for personal conversations or group
-discussions, the app keeps communication fast, reliable, and engagin. Stay connected anytime, anywhere with GuffGaff.
+GuffGaff is a modern cross-platform chat application built with Flutter, offering seamless real-time communication on both Android and iOS devices. It enables users to send instant messages, share multimedia content, and participate in group chats — all within a clean, intuitive interface designed for effortless interaction.
 
 ## [Features](/docs/Features.md)
 
